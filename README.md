@@ -15,7 +15,12 @@ a file to emit an `open-path` event downstream listeners can wire up.
 > (next to **Open AI Agent**) the moment the extension activates — no
 > manual layout wiring. Clicking it while the AI panel is open
 > auto-closes AI, and vice versa; whichever you opened last wins the
-> ~22% right slice of the workspace.
+> ~22% right slice of the workspace. The button hides while the
+> panel is open, just like the AI Agent affordance.
+>
+> A default shortcut `Mod+Shift+E` toggles the panel — rebindable
+> from *Settings → Shortcuts → Extensions* under the **Secondary
+> Folder Tree** group.
 
 ---
 
@@ -162,6 +167,6 @@ asserts the tag matches `manifest.version`, zips
 GitHub release that TEDI's installer reads from `releases/latest`.
 
 ```bash
-git tag v0.1.1
-git push origin v0.1.1
+git tag v0.1.2
+git push origin v0.1.2
 ```

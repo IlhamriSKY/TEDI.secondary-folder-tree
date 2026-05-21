@@ -13,10 +13,26 @@
 // Settings card to clutter). When the workspace changes, the tree
 // refreshes via `ctx.app.onContextChange`.
 //
+// A `Mod+Shift+E` keyboard shortcut is contributed declaratively
+// (`contributes.commands` + `contributes.keybindings`) and bound to
+// `ctx.panel.toggle("tree")` via `ctx.registerCommandHandler`. The
+// shortcut shows up in *Settings → Shortcuts → Extensions* and is
+// rebindable from there.
+//
 // Style notes: row chrome (indent depth × 12 px, 13 px text, 0.85
 // foreground opacity, accent-tinted hover, chevron that rotates 90 °
-// on expand) matches TEDI's built-in `FileTreeNode` so the two trees
-// read as siblings, not strangers.
+// on expand, 14×14 folder/file glyph in the muted foreground color)
+// matches TEDI's built-in `FileTreeNode` so the two trees read as
+// siblings, not strangers.
+
+// Inline SVG glyphs in the style of HugeIcons stroke icons. Kept
+// minimal (folder outline + file outline with the folded corner) so
+// the file size stays tiny and the icons paint via `currentColor`
+// for theme-aware tinting.
+const FOLDER_GLYPH =
+  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h3.5l2 2H19a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>';
+const FILE_GLYPH =
+  '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>';
 
 export async function activate(ctx) {
   // Single-binding state shared between the renderer and the
@@ -135,6 +151,21 @@ export async function activate(ctx) {
       },
       textContent: "▶",
     });
+    // 14 × 14 SVG glyph in the muted-foreground color. Matches the
+    // ≈16 px column FileExplorer reserves for its Material icons so
+    // labels at the same `depth` align between the two trees.
+    const glyph = el("span", {
+      style: {
+        display: "inline-flex",
+        width: "14px",
+        height: "14px",
+        alignItems: "center",
+        justifyContent: "center",
+        color: "var(--muted-foreground)",
+        flexShrink: "0",
+      },
+    });
+    glyph.innerHTML = isDir ? FOLDER_GLYPH : FILE_GLYPH;
     const label = el("span", {
       style: {
         flex: "1",
@@ -145,6 +176,7 @@ export async function activate(ctx) {
       textContent: name,
     });
     row.appendChild(chevron);
+    row.appendChild(glyph);
     row.appendChild(label);
     on(row, "mouseenter", () => {
       // `--accent` is the same token the built-in row uses. We dim it
@@ -316,6 +348,15 @@ export async function activate(ctx) {
     state.expanded.clear();
     await renderRoot();
   }
+
+  // Bind the manifest-contributed `toggle` command to the panel store
+  // via the host's imperative API. The matching keybinding (default
+  // `Mod+Shift+E`) lands here through TEDI's generic
+  // useExtensionShortcuts dispatcher; users can rebind it from
+  // Settings → Shortcuts → Extensions without touching this file.
+  ctx.registerCommandHandler("tedi.secondary-folder-tree.toggle", () => {
+    ctx.panel.toggle("tree");
+  });
 
   const disposeRenderer = ctx.registerPanelRenderer("tree", (container) => {
     build(container);

@@ -1,8 +1,8 @@
 {
   "id": "tedi.secondary-folder-tree",
   "name": "Secondary Folder Tree",
-  "version": "0.1.1",
-  "description": "A second folder tree, slid in from the right of TEDI's workspace and mutual-exclusive with the AI Agent sidebar. Renders the current workspace folder; expand subdirectories on click, double-click a file to emit an `open-path` event. Built on TEDI's generic right-panel hook (`registerPanelRenderer`) — drops in next to the AI Agent button without core changes.",
+  "version": "0.1.2",
+  "description": "A second folder tree, slid in from the right of TEDI's workspace and mutual-exclusive with the AI Agent sidebar. Renders the current workspace folder; expand subdirectories on click, double-click a file to emit an `open-path` event. Built on TEDI's generic right-panel hook (`registerPanelRenderer`) and ships a rebindable shortcut via `contributes.keybindings`.",
   "author": "IlhamRiski - ilhamriski.com",
   "homepage": "https://github.com/IlhamriSKY/TEDI.secondary-folder-tree",
   "icon": "logo.png",
@@ -14,6 +14,19 @@
     "events:emit"
   ],
   "contributes": {
+    "commands": [
+      {
+        "id": "tedi.secondary-folder-tree.toggle",
+        "title": "Toggle Secondary Folder",
+        "category": "Secondary Folder Tree"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "tedi.secondary-folder-tree.toggle",
+        "key": "Mod+Shift+E"
+      }
+    ],
     "panels": [
       {
         "id": "tree",

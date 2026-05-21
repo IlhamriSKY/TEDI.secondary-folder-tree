@@ -2,6 +2,17 @@
 
 All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.1.2] - 21-05-2026
+
+### Added
+
+- Keyboard shortcut: `Mod+Shift+E` toggles the panel. Declared via `contributes.commands` + `contributes.keybindings` and bound to the new `ctx.panel.toggle(panelId)` host helper through `ctx.registerCommandHandler`. Shows up in *Settings → Shortcuts → Extensions* and is rebindable from there (persisted under `preferences.extensionShortcuts`).
+- Folder + file glyphs in tree rows (inline SVG in muted-foreground color, 14 × 14 column matching the icon slot in TEDI's built-in `FileTreeNode`). Labels at the same depth now align visually between the secondary tree and the left-side explorer.
+
+### Changed
+
+- Status-bar toggle button now hides while the panel is open — mirrors the `AiOpenButton` behavior (close via the panel header's X). The button reappears the moment the panel closes.
+
 ## [0.1.1] - 21-05-2026
 
 ### Changed
