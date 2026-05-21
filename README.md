@@ -2,9 +2,11 @@
 
 Companion extension for [TEDI](https://github.com/IlhamriSKY/TEDI) that
 adds a **second folder tree** sliding in from the right of the
-workspace, mutual-exclusive with the AI Agent sidebar. Mirrors the
-active workspace folder, expand subdirectories on click, double-click
-a file to emit an `open-path` event downstream listeners can wire up.
+workspace, mutual-exclusive with the AI Agent sidebar. The tree is
+TEDI's built-in `FileExplorer` mounted via `ctx.ui.mountFolderTree`,
+so icons / indentation / expand-collapse / click-to-open match the
+left sidebar pixel-for-pixel — they are literally the same React
+component.
 
 <p align="center">
   <img src="logo.png" alt="Secondary Folder Tree" width="128" />
@@ -116,23 +118,20 @@ Declared in `manifest.json`:
 ```json
 "permissions": [
   "panels:register",
-  "invoke:fs_read_dir",
-  "ui:toast",
-  "events:emit"
+  "ui:toast"
 ]
 ```
 
 | Permission                  | What it lets the extension do                                                                                |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `panels:register`           | Register a runtime renderer for the right-surface panel declared in `contributes.panels[]`. The host auto-renders the matching status-bar toggle button from the manifest. |
-| `invoke:fs_read_dir`        | List directory entries through TEDI's filesystem command. Single command, no glob over `fs_*`.               |
-| `ui:toast`                  | Surface the `open-path` confirmation on double-click.                                                        |
-| `events:emit`               | Emit `open-path` so downstream listeners can wire "open in editor" without us reaching into core.            |
+| `ui:toast`                  | Reserved for future error reporting (not currently used).                                                    |
 
-No filesystem write access (the extension only reads directories), no
-settings access (no Settings-card knobs to clutter), no keychain
-access, no network access, no shell execution. The tree is strictly
-read-only.
+Note: directory listing happens inside the core `FileExplorer`
+component the extension mounts — the extension never calls
+`fs_read_dir` directly, which is why the permission isn't requested.
+Click-to-open also goes through the same workspace bridge the left
+explorer uses, so no event bus permission is needed either.
 
 ---
 
@@ -167,6 +166,6 @@ asserts the tag matches `manifest.version`, zips
 GitHub release that TEDI's installer reads from `releases/latest`.
 
 ```bash
-git tag v0.1.2
-git push origin v0.1.2
+git tag v0.1.3
+git push origin v0.1.3
 ```
