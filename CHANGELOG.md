@@ -2,6 +2,22 @@
 
 All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.1.5] - 21-05-2026
+
+### Added
+
+- **Drag a file from the tree onto any terminal pane** to insert its shell-quoted path at the cursor. Works on Windows (PowerShell + cmd double-quote escape), Linux, and macOS (POSIX single-quote escape). The path is appended via `session.write` and the terminal is focused automatically. Useful for piping a file into `claude`, `cat`, `code`, etc., without typing the path manually.
+
+### Changed
+
+- **Compact single-row header.** The panel now reuses `FileExplorer`'s built-in title bar (folder icon + folder name on the left) and injects the **Open Folder**, **Reset**, and **Close** icons after the existing Search/Refresh/Collapse buttons on the right. The host's "Secondary Folder" title strip is hidden via the new `panels[].hideHostHeader: true` manifest flag.
+- **Removed clutter:** "New file", "New folder", and "Search in files" (grep) buttons are hidden in the secondary panel via the new `hideCreateActions` + `hideGrep` props on `FileExplorer`. Filename search stays.
+- Description in `manifest.json` simplified to one sentence covering what + key shortcut.
+
+### Removed
+
+- `ui:toast` permission (no toast surface is used in v0.1.5).
+
 ## [0.1.4] - 21-05-2026
 
 ### Added

@@ -166,6 +166,6 @@ asserts the tag matches `manifest.version`, zips
 GitHub release that TEDI's installer reads from `releases/latest`.
 
 ```bash
-git tag v0.1.4
-git push origin v0.1.4
+git tag v0.1.5
+git push origin v0.1.5
 ```

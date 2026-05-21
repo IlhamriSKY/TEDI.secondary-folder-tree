@@ -33,15 +33,22 @@ export async function activate(ctx) {
   const disposeRenderer = ctx.registerPanelRenderer("tree", (container) => {
     state.mounted = ctx.ui.mountFolderTree(container, {
       rootPath: state.rootPath,
-      // Show the "Open Folder" toolbar at the top of the panel so
-      // users can browse arbitrary directories without having to
-      // change the active workspace. Picking a folder swaps the
-      // tree root locally; a reset chip restores the workspace
-      // folder once they're done.
+      // Inject the "Open Folder" picker into the existing FileExplorer
+      // header (single compact row: folder-icon + name on the left,
+      // action icons on the right). Pair with `hideHostHeader: true`
+      // in the manifest so the host doesn't render a competing
+      // title strip above it.
       showOpenFolder: true,
+      // Close button lives in the header action row alongside the
+      // other icons. The host's title strip is suppressed via the
+      // manifest's `hideHostHeader: true`, so this is the only way
+      // the user closes the panel besides the status-bar toggle.
+      onClose: () => ctx.panel.close("tree"),
       // Omitting `onOpenFile` routes the click through the host's
       // workspace bridge → openFileTab → editor tab, same as the
-      // left explorer.
+      // left explorer. Drag-from-tree → drop-on-terminal is wired
+      // by core (FileTreeNode dragstart + TerminalPane drop) so no
+      // extension code is needed for that path.
     });
     return () => {
       try {

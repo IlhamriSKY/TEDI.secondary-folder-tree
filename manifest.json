@@ -1,15 +1,14 @@
 {
   "id": "tedi.secondary-folder-tree",
   "name": "Secondary Folder Tree",
-  "version": "0.1.4",
-  "description": "A second folder tree, slid in from the right of TEDI's workspace and mutual-exclusive with the AI Agent sidebar. Renders TEDI's built-in file explorer (`ctx.ui.mountFolderTree`) so icons, indentation, expand/collapse, and click-to-open match the left sidebar pixel-for-pixel. Default workspace folder; rebindable `Mod+Shift+E` shortcut.",
+  "version": "0.1.5",
+  "description": "A second folder tree on the right of TEDI's workspace. Pick any folder, click to open files in a tab, drag files into a terminal to insert the path. Rebindable shortcut: Ctrl+Shift+E.",
   "author": "IlhamRiski - ilhamriski.com",
   "homepage": "https://github.com/IlhamriSKY/TEDI.secondary-folder-tree",
   "icon": "logo.png",
   "main": "extension.js",
   "permissions": [
-    "panels:register",
-    "ui:toast"
+    "panels:register"
   ],
   "contributes": {
     "commands": [
@@ -32,7 +31,8 @@
         "surface": "right",
         "icon": "logo.png",
         "defaultOpen": false,
-        "toggleCommand": "tedi.secondary-folder-tree.toggle"
+        "toggleCommand": "tedi.secondary-folder-tree.toggle",
+        "hideHostHeader": true
       }
     ]
   },
