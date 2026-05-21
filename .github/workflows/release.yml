@@ -2,9 +2,13 @@ name: Release
 
 # Tag-triggered release. Each `vX.Y.Z` push:
 #   1. asserts manifest.json version matches the tag
-#   2. zips the runtime files (manifest + extension.js + logo.png)
-#   3. uploads the .zip to the GitHub release that TEDI's installer
-#      reads from `releases/latest`
+#   2. zips the runtime files (manifest + extension.js + icon + README +
+#      CHANGELOG + LICENSE)
+#   3. uploads the zip to the GitHub release that TEDI's installer reads
+#      from `releases/latest`.
+#
+# No native sidecar - this extension is pure JS, rendering with vanilla
+# DOM into the right-panel slot via TEDI's `registerPanelRenderer` hook.
 
 on:
   push:
@@ -57,10 +61,16 @@ jobs:
           set -euo pipefail
           mkdir -p dist
           out="dist/tedi.secondary-folder-tree-${{ steps.ver.outputs.version }}.zip"
-          zip -j "$out" \
+          # Only ship runtime files. README + CHANGELOG + LICENSE stay in the
+          # repo but are bundled too so the install card shows the right
+          # metadata.
+          zip "$out" \
             manifest.json \
             extension.js \
-            logo.png
+            logo.png \
+            README.md \
+            CHANGELOG.md \
+            LICENSE
           unzip -l "$out"
           echo "path=$out" >> "$GITHUB_OUTPUT"
 
