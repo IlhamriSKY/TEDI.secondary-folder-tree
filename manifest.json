@@ -2,8 +2,9 @@
   "id": "tedi.secondary-folder-tree",
   "name": "Secondary Folder Tree",
   "version": "0.1.0",
-  "description": "Browse a second folder side-by-side with the main explorer. Pin any path on disk, expand subfolders, double-click to open in the editor.",
-  "author": "ilhamrisky",
+  "description": "A second folder tree, slid in from the right of TEDI's workspace and mutual-exclusive with the AI Agent sidebar. Pin any folder on disk via the per-extension default path setting, expand subdirectories on click, double-click a file to emit an `open-path` event. Built on TEDI's generic right-panel hook (`registerPanelRenderer`) — drops in next to the AI Agent button without core changes.",
+  "author": "IlhamRiski - ilhamriski.com",
+  "homepage": "https://github.com/IlhamriSKY/TEDI.secondary-folder-tree",
   "icon": "logo.png",
   "main": "extension.js",
   "permissions": [
@@ -20,7 +21,7 @@
         "id": "defaultPath",
         "type": "string",
         "label": "Default folder",
-        "description": "Absolute path that the panel opens to. Leave empty to start at the user's home folder.",
+        "description": "Absolute path that the panel opens to. Leave empty to start at the active workspace folder.",
         "default": ""
       },
       {
@@ -41,5 +42,5 @@
       }
     ]
   },
-  "engines": { "tedi": ">=0.2.14" }
+  "engines": { "tedi": ">=0.2.15" }
 }
