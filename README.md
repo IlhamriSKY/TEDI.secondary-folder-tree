@@ -2,9 +2,9 @@
 
 Companion extension for [TEDI](https://github.com/IlhamriSKY/TEDI) that
 adds a **second folder tree** sliding in from the right of the
-workspace, mutual-exclusive with the AI Agent sidebar. Pin any folder
-on disk, expand subdirectories on click, double-click a file to emit
-an `open-path` event downstream listeners can wire up.
+workspace, mutual-exclusive with the AI Agent sidebar. Mirrors the
+active workspace folder, expand subdirectories on click, double-click
+a file to emit an `open-path` event downstream listeners can wire up.
 
 <p align="center">
   <img src="logo.png" alt="Secondary Folder Tree" width="128" />
@@ -69,34 +69,32 @@ ctx.registerPanelRenderer("tree", (container) => { … })
     │  (registered by this extension at activate)
     ▼
 renderTree(container):  ← vanilla DOM, zero React duplication
-    ├── header   path input + Open + Save default
-    ├── tree     ctx.invoke("fs_read_dir") per expanded node
-    └── events   double-click → ctx.events.emit("open-path", {...})
+    ├── root      ctx.app.getContext().workspaceCwd
+    ├── nodes     ctx.invoke("fs_read_dir") per expanded directory
+    └── events    click file → ctx.events.emit("open-path", {...})
 ```
 
 The extension never reaches into TEDI core. On activate it:
 
-1. Resolves the default folder (`ctx.settings.get("defaultPath")` with
-   a fallback to `ctx.app.getContext().workspaceCwd`).
+1. Resolves the workspace cwd (`ctx.app.getContext().workspaceCwd`).
 2. Calls `ctx.registerPanelRenderer("tree", renderFn)` so the host
    knows how to paint the panel when the user clicks the toggle.
-3. Subscribes to `ctx.settings.onChange("defaultPath")` so a path
-   change in the Settings card live-updates the open panel.
+3. Subscribes to `ctx.app.onContextChange` so a workspace change
+   live-refreshes the open panel.
 
 On deactivate / uninstall, TEDI's extension host automatically runs the
 renderer's cleanup callback **and** the panel's own state coordinator
 (`App.tsx`) detects the orphaned target and closes the slot. No core
 TEDI code is folder-tree-aware.
 
-### Settings
+### Visual style
 
-Both settings are also surfaced in *Settings → Extensions → Secondary
-Folder Tree* (auto-rendered from `contributes.settings`):
-
-| Setting | Type | Purpose |
-| --- | --- | --- |
-| **Default folder** | string | Absolute path that the panel opens to on first reveal. Leave empty to fall back to the active workspace folder. |
-| **Open on startup** | boolean | When enabled, the panel auto-opens once per session (honors a panel manifest's `defaultOpen: true` exactly once — re-closing in the same session is respected). |
+Row chrome (indent depth × 12 px, 13 px text, 0.85 foreground opacity,
+accent-tinted hover, chevron that rotates 90 ° on expand) is lifted
+verbatim from TEDI's built-in `FileTreeNode`, restated via inline
+style + the CSS variables TEDI's theme exposes (`--foreground`,
+`--accent`, `--muted-foreground`). The two trees read as siblings, not
+strangers.
 
 ### Events
 
@@ -113,25 +111,23 @@ Declared in `manifest.json`:
 ```json
 "permissions": [
   "panels:register",
-  "settings:read",
-  "settings:write",
   "invoke:fs_read_dir",
   "ui:toast",
   "events:emit"
 ]
 ```
 
-| Permission                  | What it lets the extension do                                                                  |
-| --------------------------- | ---------------------------------------------------------------------------------------------- |
+| Permission                  | What it lets the extension do                                                                                |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `panels:register`           | Register a runtime renderer for the right-surface panel declared in `contributes.panels[]`. The host auto-renders the matching status-bar toggle button from the manifest. |
-| `settings:read` / `:write`  | Persist + read the default folder and auto-open toggle, namespaced under `ext:tedi.secondary-folder-tree:*`. |
-| `invoke:fs_read_dir`        | List directory entries through TEDI's filesystem command. Single command, no glob over `fs_*`. |
-| `ui:toast`                  | Confirm "Saved as default folder" and surface read errors.                                     |
-| `events:emit`               | Emit `open-path` on double-click so downstream listeners can wire "open in editor" without us reaching into core. |
+| `invoke:fs_read_dir`        | List directory entries through TEDI's filesystem command. Single command, no glob over `fs_*`.               |
+| `ui:toast`                  | Surface the `open-path` confirmation on double-click.                                                        |
+| `events:emit`               | Emit `open-path` so downstream listeners can wire "open in editor" without us reaching into core.            |
 
 No filesystem write access (the extension only reads directories), no
-keychain access, no network access, no shell execution. The tree is
-strictly read-only.
+settings access (no Settings-card knobs to clutter), no keychain
+access, no network access, no shell execution. The tree is strictly
+read-only.
 
 ---
 
@@ -166,6 +162,6 @@ asserts the tag matches `manifest.version`, zips
 GitHub release that TEDI's installer reads from `releases/latest`.
 
 ```bash
-git tag v0.1.0
-git push origin v0.1.0
+git tag v0.1.1
+git push origin v0.1.1
 ```

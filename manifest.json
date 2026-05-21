@@ -1,37 +1,19 @@
 {
   "id": "tedi.secondary-folder-tree",
   "name": "Secondary Folder Tree",
-  "version": "0.1.0",
-  "description": "A second folder tree, slid in from the right of TEDI's workspace and mutual-exclusive with the AI Agent sidebar. Pin any folder on disk via the per-extension default path setting, expand subdirectories on click, double-click a file to emit an `open-path` event. Built on TEDI's generic right-panel hook (`registerPanelRenderer`) — drops in next to the AI Agent button without core changes.",
+  "version": "0.1.1",
+  "description": "A second folder tree, slid in from the right of TEDI's workspace and mutual-exclusive with the AI Agent sidebar. Renders the current workspace folder; expand subdirectories on click, double-click a file to emit an `open-path` event. Built on TEDI's generic right-panel hook (`registerPanelRenderer`) — drops in next to the AI Agent button without core changes.",
   "author": "IlhamRiski - ilhamriski.com",
   "homepage": "https://github.com/IlhamriSKY/TEDI.secondary-folder-tree",
   "icon": "logo.png",
   "main": "extension.js",
   "permissions": [
     "panels:register",
-    "settings:read",
-    "settings:write",
     "invoke:fs_read_dir",
     "ui:toast",
     "events:emit"
   ],
   "contributes": {
-    "settings": [
-      {
-        "id": "defaultPath",
-        "type": "string",
-        "label": "Default folder",
-        "description": "Absolute path that the panel opens to. Leave empty to start at the active workspace folder.",
-        "default": ""
-      },
-      {
-        "id": "autoOpen",
-        "type": "boolean",
-        "label": "Open on startup",
-        "description": "When enabled, the secondary tree opens automatically the first time TEDI launches each session.",
-        "default": false
-      }
-    ],
     "panels": [
       {
         "id": "tree",
