@@ -1,0 +1,45 @@
+{
+  "id": "tedi.secondary-folder-tree",
+  "name": "Secondary Folder Tree",
+  "version": "0.1.0",
+  "description": "Browse a second folder side-by-side with the main explorer. Pin any path on disk, expand subfolders, double-click to open in the editor.",
+  "author": "ilhamrisky",
+  "icon": "logo.png",
+  "main": "extension.js",
+  "permissions": [
+    "panels:register",
+    "settings:read",
+    "settings:write",
+    "invoke:fs_read_dir",
+    "ui:toast",
+    "events:emit"
+  ],
+  "contributes": {
+    "settings": [
+      {
+        "id": "defaultPath",
+        "type": "string",
+        "label": "Default folder",
+        "description": "Absolute path that the panel opens to. Leave empty to start at the user's home folder.",
+        "default": ""
+      },
+      {
+        "id": "autoOpen",
+        "type": "boolean",
+        "label": "Open on startup",
+        "description": "When enabled, the secondary tree opens automatically the first time TEDI launches each session.",
+        "default": false
+      }
+    ],
+    "panels": [
+      {
+        "id": "tree",
+        "title": "Secondary Folder",
+        "surface": "right",
+        "icon": "logo.png",
+        "defaultOpen": false
+      }
+    ]
+  },
+  "engines": { "tedi": ">=0.2.14" }
+}
