@@ -14,6 +14,27 @@
 // rebindable from Settings → Shortcuts → Extensions.
 
 export async function activate(ctx) {
+  // Guard against older TEDI builds that predate the host APIs this
+  // extension needs. The Discord reference handles missing host
+  // backends the same way — fire one warning toast, short-circuit
+  // activation, leave disable/uninstall working. The user lands on
+  // a clear "you need to update TEDI" instead of a stack trace in
+  // the dev-tools console.
+  const missing = [];
+  if (typeof ctx.ui?.mountFolderTree !== "function") missing.push("ctx.ui.mountFolderTree");
+  if (typeof ctx.panel?.toggle !== "function") missing.push("ctx.panel.toggle");
+  if (typeof ctx.registerPanelRenderer !== "function") missing.push("ctx.registerPanelRenderer");
+  if (missing.length > 0) {
+    const msg = `Secondary Folder Tree needs a newer TEDI (missing: ${missing.join(", ")}).`;
+    ctx.logger.warn(msg);
+    try {
+      ctx.ui?.toast?.(msg, { variant: "warning" });
+    } catch {
+      // Even `toast` may not exist on very old hosts; ignore.
+    }
+    return; // Stay activated-but-idle so disable/uninstall still tears down cleanly.
+  }
+
   // Track the mount handle so we can pass workspace-cwd updates
   // through `update()` instead of remount-and-lose-expansion.
   const state = {

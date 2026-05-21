@@ -1,14 +1,15 @@
 {
   "id": "tedi.secondary-folder-tree",
   "name": "Secondary Folder Tree",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A second folder tree on the right of TEDI's workspace. Pick any folder, click to open files in a tab, drag files into a terminal to insert the path. Rebindable shortcut: Ctrl+Shift+E.",
   "author": "IlhamRiski - ilhamriski.com",
   "homepage": "https://github.com/IlhamriSKY/TEDI.secondary-folder-tree",
   "icon": "logo.png",
   "main": "extension.js",
   "permissions": [
-    "panels:register"
+    "panels:register",
+    "ui:toast"
   ],
   "contributes": {
     "commands": [

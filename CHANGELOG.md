@@ -2,6 +2,16 @@
 
 All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.1.6] - 21-05-2026
+
+### Added
+
+- **Graceful degradation on older TEDI hosts** (Discord-reference pattern). Activate now probes for `ctx.ui.mountFolderTree`, `ctx.panel.toggle`, and `ctx.registerPanelRenderer` before using them. If any is missing, the extension fires a single warning toast naming the missing API and stays idle so disable/uninstall still works without errors.
+
+### Changed
+
+- Re-add `ui:toast` permission (was dropped in 0.1.5) so the version-mismatch toast above can surface. Permission is low-risk and used only for transient status messages.
+
 ## [0.1.5] - 21-05-2026
 
 ### Added
