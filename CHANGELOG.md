@@ -2,6 +2,16 @@
 
 All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.1.4] - 21-05-2026
+
+### Added
+
+- **Open Folder** button in the panel toolbar. Click pops the OS folder picker and swaps the tree root to the chosen directory; a reset chip appears next to it to restore the workspace folder in one click. The pick is session-scoped and lost on close (mirrors the AI sidebar's transient state model).
+
+### Changed
+
+- Status-bar toggle button's `<Kbd>` chip now formats with the platform key separator (`Ctrl+Shift+E` on Windows/Linux, `⇧⌃E` on macOS) — matches `AiOpenButton`'s `Ctrl+I` / `⌘I` formatting exactly.
+
 ## [0.1.3] - 21-05-2026
 
 ### Changed

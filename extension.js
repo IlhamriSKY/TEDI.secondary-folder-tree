@@ -33,6 +33,12 @@ export async function activate(ctx) {
   const disposeRenderer = ctx.registerPanelRenderer("tree", (container) => {
     state.mounted = ctx.ui.mountFolderTree(container, {
       rootPath: state.rootPath,
+      // Show the "Open Folder" toolbar at the top of the panel so
+      // users can browse arbitrary directories without having to
+      // change the active workspace. Picking a folder swaps the
+      // tree root locally; a reset chip restores the workspace
+      // folder once they're done.
+      showOpenFolder: true,
       // Omitting `onOpenFile` routes the click through the host's
       // workspace bridge → openFileTab → editor tab, same as the
       // left explorer.
