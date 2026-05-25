@@ -2,6 +2,12 @@
 
 All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.1.7] - 25-05-2026
+
+### Changed
+
+- **Cosmetic em-dash sweep.** Replaced `—` (U+2014 EM DASH) with `-` (U+002D HYPHEN-MINUS) across `README.md`, `CHANGELOG.md`, and `extension.js` comments. No runtime behaviour change; the JS code paths execute identically to 0.1.6.
+
 ## [0.1.6] - 21-05-2026
 
 ### Added
@@ -36,19 +42,19 @@ All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Ch
 
 ### Changed
 
-- Status-bar toggle button's `<Kbd>` chip now formats with the platform key separator (`Ctrl+Shift+E` on Windows/Linux, `⇧⌃E` on macOS) — matches `AiOpenButton`'s `Ctrl+I` / `⌘I` formatting exactly.
+- Status-bar toggle button's `<Kbd>` chip now formats with the platform key separator (`Ctrl+Shift+E` on Windows/Linux, `⇧⌃E` on macOS) - matches `AiOpenButton`'s `Ctrl+I` / `⌘I` formatting exactly.
 
 ## [0.1.3] - 21-05-2026
 
 ### Changed
 
-- **Tree now reuses TEDI's built-in `FileExplorer`** via the new `ctx.ui.mountFolderTree` host API. Icons, indentation, hover, expand/collapse, click-to-open, context menu, rename — all pixel-identical to the left sidebar because the two trees ARE the same React component. Drops ~200 lines of vanilla DOM rendering in `extension.js`.
+- **Tree now reuses TEDI's built-in `FileExplorer`** via the new `ctx.ui.mountFolderTree` host API. Icons, indentation, hover, expand/collapse, click-to-open, context menu, rename - all pixel-identical to the left sidebar because the two trees ARE the same React component. Drops ~200 lines of vanilla DOM rendering in `extension.js`.
 - Click-to-open routes through TEDI's workspace bridge → editor tab, same path as the left explorer.
 - Status-bar toggle button restyled to match `AiOpenButton` exactly (h-6, motion drop-in, hover accent border) and now shows the bound shortcut as a `<Kbd>` chip via the new `panel.toggleCommand` manifest field.
 
 ### Removed
 
-- Inline SVG folder/file glyphs in `extension.js` — replaced by the core component's real Material/Catppuccin icons.
+- Inline SVG folder/file glyphs in `extension.js` - replaced by the core component's real Material/Catppuccin icons.
 - `invoke:fs_read_dir` and `events:emit` permissions. The core component handles directory listing internally; file-open events are routed through the workspace bridge, not the extension event bus.
 
 ## [0.1.2] - 21-05-2026
@@ -60,7 +66,7 @@ All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Ch
 
 ### Changed
 
-- Status-bar toggle button now hides while the panel is open — mirrors the `AiOpenButton` behavior (close via the panel header's X). The button reappears the moment the panel closes.
+- Status-bar toggle button now hides while the panel is open - mirrors the `AiOpenButton` behavior (close via the panel header's X). The button reappears the moment the panel closes.
 
 ## [0.1.1] - 21-05-2026
 

@@ -5,7 +5,7 @@ adds a **second folder tree** sliding in from the right of the
 workspace, mutual-exclusive with the AI Agent sidebar. The tree is
 TEDI's built-in `FileExplorer` mounted via `ctx.ui.mountFolderTree`,
 so icons / indentation / expand-collapse / click-to-open match the
-left sidebar pixel-for-pixel — they are literally the same React
+left sidebar pixel-for-pixel - they are literally the same React
 component.
 
 <p align="center">
@@ -14,13 +14,13 @@ component.
 
 > [!NOTE]
 > The toggle button auto-appears in the status bar's right cluster
-> (next to **Open AI Agent**) the moment the extension activates — no
+> (next to **Open AI Agent**) the moment the extension activates - no
 > manual layout wiring. Clicking it while the AI panel is open
 > auto-closes AI, and vice versa; whichever you opened last wins the
 > ~22% right slice of the workspace. The button hides while the
 > panel is open, just like the AI Agent affordance.
 >
-> A default shortcut `Mod+Shift+E` toggles the panel — rebindable
+> A default shortcut `Mod+Shift+E` toggles the panel - rebindable
 > from *Settings → Shortcuts → Extensions* under the **Secondary
 > Folder Tree** group.
 
@@ -66,7 +66,7 @@ TEDI status bar
 useRightPanelStore.toggle(extId, "tree")
     │
     │  state coordinator (App.tsx) auto-closes the AI sidebar if it
-    │  was open — the two share the same ~22% right slot
+    │  was open - the two share the same ~22% right slot
     ▼
 <ResizablePanel id="right-slot">
     │
@@ -128,7 +128,7 @@ Declared in `manifest.json`:
 | `ui:toast`                  | Reserved for future error reporting (not currently used).                                                    |
 
 Note: directory listing happens inside the core `FileExplorer`
-component the extension mounts — the extension never calls
+component the extension mounts - the extension never calls
 `fs_read_dir` directly, which is why the permission isn't requested.
 Click-to-open also goes through the same workspace bridge the left
 explorer uses, so no event bus permission is needed either.
@@ -159,7 +159,7 @@ After install, watch TEDI's dev-tools console (`Ctrl+Shift+I`) for
 `[ext:tedi.secondary-folder-tree]` log lines (renderer registration,
 settings reads, `fs_read_dir` failures if any).
 
-Cut a release with a `vX.Y.Z` tag — the bundled
+Cut a release with a `vX.Y.Z` tag - the bundled
 [`.github/workflows/release.yml`](.github/workflows/release.yml)
 asserts the tag matches `manifest.version`, zips
 `manifest.json + extension.js + logo.png`, and uploads to the

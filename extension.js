@@ -1,10 +1,10 @@
-// Secondary Folder Tree — thin wrapper around TEDI's built-in
+// Secondary Folder Tree - thin wrapper around TEDI's built-in
 // `FileExplorer`, mounted via `ctx.ui.mountFolderTree`.
 //
 // Reusing the core component means the secondary tree gets every
-// behavior the left sidebar has — Material icons, indentation,
+// behavior the left sidebar has - Material icons, indentation,
 // expand/collapse, click-to-open (routed through the workspace
-// bridge), context menu, rename, refresh — without us reimplementing
+// bridge), context menu, rename, refresh - without us reimplementing
 // any of it. The two trees are visually indistinguishable because
 // they ARE the same component.
 //
@@ -16,7 +16,7 @@
 export async function activate(ctx) {
   // Guard against older TEDI builds that predate the host APIs this
   // extension needs. The Discord reference handles missing host
-  // backends the same way — fire one warning toast, short-circuit
+  // backends the same way - fire one warning toast, short-circuit
   // activation, leave disable/uninstall working. The user lands on
   // a clear "you need to update TEDI" instead of a stack trace in
   // the dev-tools console.
@@ -95,6 +95,6 @@ export async function activate(ctx) {
 }
 
 export function deactivate() {
-  // All resources tied to disposers — registerPanelRenderer +
-  // app.onContextChange — are released by the host automatically.
+  // All resources tied to disposers - registerPanelRenderer +
+  // app.onContextChange - are released by the host automatically.
 }
