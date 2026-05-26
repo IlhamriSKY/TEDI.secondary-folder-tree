@@ -1,8 +1,8 @@
 {
   "id": "tedi.secondary-folder-tree",
   "name": "Secondary Folder Tree",
-  "version": "0.1.7",
-  "description": "A second folder tree on the right of TEDI's workspace. Pick any folder, click to open files in a tab, drag files into a terminal to insert the path. Rebindable shortcut: Ctrl+Shift+E.",
+  "version": "0.1.8",
+  "description": "Adds a second folder tree on the right side of the workspace for browsing files outside the active project. Toggle with Ctrl+Shift+E.",
   "author": "IlhamRiski - ilhamriski.com",
   "homepage": "https://github.com/IlhamriSKY/TEDI.secondary-folder-tree",
   "icon": "logo.png",
