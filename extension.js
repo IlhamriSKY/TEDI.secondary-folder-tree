@@ -37,10 +37,30 @@ export async function activate(ctx) {
 
   // Track the mount handle so we can pass workspace-cwd updates
   // through `update()` instead of remount-and-lose-expansion.
+  //
+  // `pickedPath` lives in the activate closure (not React state)
+  // because closing the panel unmounts the React tree, which would
+  // otherwise drop the user's "Open Folder" choice and snap back to
+  // the workspace root on reopen. We also mirror it to `ctx.storage`
+  // so it survives full app reloads.
   const state = {
     mounted: null, // MountedFolderTree | null
     rootPath: ctx.app.getContext().workspaceCwd ?? null,
+    pickedPath: null, // string | null
   };
+
+  // Restore the last picker selection before registering the renderer
+  // so the very first mount sees a settled value. Storage is
+  // per-extension (tedi-ext-<id>.json) so no key collisions.
+  const PICKED_PATH_KEY = "pickedPath";
+  try {
+    const persisted = await ctx.storage.get(PICKED_PATH_KEY);
+    if (typeof persisted === "string" && persisted.length > 0) {
+      state.pickedPath = persisted;
+    }
+  } catch (err) {
+    ctx.logger.warn("Secondary Folder Tree: failed to load picked path", err);
+  }
 
   // Bind the manifest-contributed `toggle` command to the panel store
   // via the host's imperative API. The matching keybinding (default
@@ -54,6 +74,23 @@ export async function activate(ctx) {
   const disposeRenderer = ctx.registerPanelRenderer("tree", (container) => {
     state.mounted = ctx.ui.mountFolderTree(container, {
       rootPath: state.rootPath,
+      // Restore the prior picker selection (in-session via closure,
+      // cross-session via ctx.storage). The shell's useState only
+      // honors this on first render of each React root, which is
+      // exactly what we want.
+      initialPickedPath: state.pickedPath,
+      onPickedPathChange: (path) => {
+        state.pickedPath = path;
+        // Fire-and-forget; a transient storage write failure
+        // shouldn't block the React state update.
+        const write =
+          path === null
+            ? ctx.storage.delete(PICKED_PATH_KEY)
+            : ctx.storage.set(PICKED_PATH_KEY, path);
+        void write.catch((err) => {
+          ctx.logger.warn("Secondary Folder Tree: failed to persist picked path", err);
+        });
+      },
       // Inject the "Open Folder" picker into the existing FileExplorer
       // header (single compact row: folder-icon + name on the left,
       // action icons on the right). Pair with `hideHostHeader: true`
@@ -87,7 +124,21 @@ export async function activate(ctx) {
     const cwd = next.workspaceCwd ?? null;
     if (cwd === state.rootPath) return;
     state.rootPath = cwd;
-    state.mounted?.update({ rootPath: cwd });
+    if (state.mounted) {
+      // Shell's workspace-switch effect will fire onPickedPathChange(null)
+      // for us, which updates state.pickedPath + persists.
+      state.mounted.update({ rootPath: cwd });
+    } else {
+      // Panel is closed: no shell to fire the callback, so clear here.
+      // Otherwise reopening on a new workspace would resurrect a stale
+      // pick from the prior project.
+      if (state.pickedPath !== null) {
+        state.pickedPath = null;
+        void ctx.storage.delete(PICKED_PATH_KEY).catch((err) => {
+          ctx.logger.warn("Secondary Folder Tree: failed to clear picked path", err);
+        });
+      }
+    }
   });
 
   ctx.addDisposer(disposeRenderer);

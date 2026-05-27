@@ -2,6 +2,16 @@
 
 All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.1.9] - 27-05-2026
+
+### Fixed
+
+- **"Open Folder" pick now survives close/reopen.** Previously, closing the right panel unmounted the React tree and dropped the user's picker selection, so reopening snapped back to the workspace root. The pick is now held in the extension's activate closure (so close/reopen within a session works) and mirrored to `ctx.storage` (so it survives full app reloads). Cleared automatically on workspace switch.
+
+### Changed
+
+- Bumped host API requirement implicitly: `ctx.ui.mountFolderTree` now accepts `initialPickedPath` + `onPickedPathChange`. Older TEDI builds ignore the unknown options and fall back to the previous reset-on-reopen behavior, so no version gate was added.
+
 ## [0.1.8] - 26-05-2026
 
 ### Changed
