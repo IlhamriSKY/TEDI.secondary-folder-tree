@@ -7,3 +7,7 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Built bundle — generated from src/ by node build.mjs. NOT committed: CI builds it into the release .zip.
+/extension.js
+node_modules/
