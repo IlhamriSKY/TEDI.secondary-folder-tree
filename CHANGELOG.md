@@ -2,19 +2,19 @@
 
 All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
-## [0.1.11] - 16-06-2026
+## [0.1.11] - 2026-06-16
 
 ### Changed
 
 - **Build pipeline.** The extension is now authored as `src/index.js` and bundled into `extension.js` with esbuild (`npm run build`); the built bundle is **no longer committed** — CI (`release.yml`) builds it into the release `.zip` that users install. No behaviour change. CI actions bumped to `@v5` (Node 24).
 
-## [0.1.10] - 28-05-2026
+## [0.1.10] - 2026-05-28
 
 ### Changed
 
 - **`engines.tedi` raised to `>=0.3.9`.** The host now enforces this constraint at install time, so older TEDI builds refuse to install the extension and surface a "needs TEDI X.Y.Z" message rather than letting it run against a host that predates the current API surface.
 
-## [0.1.9] - 27-05-2026
+## [0.1.9] - 2026-05-27
 
 ### Fixed
 
@@ -24,19 +24,19 @@ All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Ch
 
 - Bumped host API requirement implicitly: `ctx.ui.mountFolderTree` now accepts `initialPickedPath` + `onPickedPathChange`. Older TEDI builds ignore the unknown options and fall back to the previous reset-on-reopen behavior, so no version gate was added.
 
-## [0.1.8] - 26-05-2026
+## [0.1.8] - 2026-05-26
 
 ### Changed
 
 - **Manifest description trimmed.** Reduced to the same "what + how" one-liner the other reference extensions use, so the *Settings → Extensions → From GitHub* install dialog reads cleanly when this card sits alongside SQL Explorer / Beautify / Discord Rich Presence. No runtime behaviour change.
 
-## [0.1.7] - 25-05-2026
+## [0.1.7] - 2026-05-25
 
 ### Changed
 
 - **Cosmetic em-dash sweep.** Replaced `—` (U+2014 EM DASH) with `-` (U+002D HYPHEN-MINUS) across `README.md`, `CHANGELOG.md`, and `extension.js` comments. No runtime behaviour change; the JS code paths execute identically to 0.1.6.
 
-## [0.1.6] - 21-05-2026
+## [0.1.6] - 2026-05-21
 
 ### Added
 
@@ -46,7 +46,7 @@ All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Ch
 
 - Re-add `ui:toast` permission (was dropped in 0.1.5) so the version-mismatch toast above can surface. Permission is low-risk and used only for transient status messages.
 
-## [0.1.5] - 21-05-2026
+## [0.1.5] - 2026-05-21
 
 ### Added
 
@@ -62,7 +62,7 @@ All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Ch
 
 - `ui:toast` permission (no toast surface is used in v0.1.5).
 
-## [0.1.4] - 21-05-2026
+## [0.1.4] - 2026-05-21
 
 ### Added
 
@@ -72,7 +72,7 @@ All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Ch
 
 - Status-bar toggle button's `<Kbd>` chip now formats with the platform key separator (`Ctrl+Shift+E` on Windows/Linux, `⇧⌃E` on macOS) - matches `AiOpenButton`'s `Ctrl+I` / `⌘I` formatting exactly.
 
-## [0.1.3] - 21-05-2026
+## [0.1.3] - 2026-05-21
 
 ### Changed
 
@@ -85,7 +85,7 @@ All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Ch
 - Inline SVG folder/file glyphs in `extension.js` - replaced by the core component's real Material/Catppuccin icons.
 - `invoke:fs_read_dir` and `events:emit` permissions. The core component handles directory listing internally; file-open events are routed through the workspace bridge, not the extension event bus.
 
-## [0.1.2] - 21-05-2026
+## [0.1.2] - 2026-05-21
 
 ### Added
 
@@ -96,7 +96,7 @@ All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Ch
 
 - Status-bar toggle button now hides while the panel is open - mirrors the `AiOpenButton` behavior (close via the panel header's X). The button reappears the moment the panel closes.
 
-## [0.1.1] - 21-05-2026
+## [0.1.1] - 2026-05-21
 
 ### Changed
 
@@ -110,7 +110,7 @@ All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Ch
 - **Open on startup** setting (boolean). The manifest's `panels[].defaultOpen` flag (handled by the host) is the single source of truth for auto-open behavior.
 - `settings:read` and `settings:write` permissions (no Settings-card knobs to read or persist).
 
-## [0.1.0] - 21-05-2026
+## [0.1.0] - 2026-05-21
 
 ### Added
 
