@@ -31,21 +31,13 @@ card. If a new release exists, click **Update** to reinstall in place.
 
 ## How it works
 
-```
-TEDI status bar
-    │ click "Secondary Folder"
-    ▼
-useRightPanelStore.toggle(extId, "tree")
-    │ App.tsx auto-closes the AI sidebar if it was open
-    ▼
-<ResizablePanel id="right-slot">
-    │ <RightPanelHost> mounts a fresh <div>
-    ▼
-ctx.registerPanelRenderer("tree", (container) => { … })
-    │ this extension's renderer paints into the container
-    ▼
-ctx.ui.mountFolderTree(container, { rootPath, onOpenFile, … })
-    │ TEDI's built-in FileExplorer is mounted into the slot
+```mermaid
+flowchart TD
+    A["TEDI status bar"] -->|"click 'Secondary Folder'"| B["useRightPanelStore.toggle(extId, 'tree')"]
+    B -->|"App.tsx auto-closes the AI sidebar if it was open"| C["ResizablePanel, id right-slot"]
+    C -->|"RightPanelHost mounts a fresh div"| D["ctx.registerPanelRenderer('tree', renderFn)"]
+    D -->|"the renderer paints into the container"| E["ctx.ui.mountFolderTree(container, opts)"]
+    E -->|"TEDI's built-in FileExplorer mounts into the slot"| F["Second folder tree visible"]
 ```
 
 On activate the extension:
