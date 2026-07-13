@@ -4,7 +4,7 @@
   "version": "0.1.11",
   "description": "Adds a second folder tree on the right side of the workspace for browsing files outside the active project. Toggle with Ctrl+Shift+E.",
   "author": "IlhamRiski - ilhamriski.com",
-  "homepage": "https://github.com/IlhamriSKY/TEDI.secondary-folder-tree",
+  "homepage": "https://tedi.ilhamriski.com/",
   "icon": "logo.png",
   "main": "extension.js",
   "permissions": [

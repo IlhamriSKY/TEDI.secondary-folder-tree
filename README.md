@@ -1,6 +1,6 @@
 # TEDI Secondary Folder Tree
 
-Adds a **second folder tree** to [TEDI](https://github.com/IlhamriSKY/TEDI),
+Adds a **second folder tree** to [TEDI](https://tedi.ilhamriski.com/),
 sliding in from the right of the workspace next to the AI Agent panel. The tree
 is TEDI's built-in `FileExplorer` mounted via `ctx.ui.mountFolderTree`, so
 icons, indentation, expand / collapse, and click-to-open all match the left
