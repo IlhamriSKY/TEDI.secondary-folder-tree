@@ -2,6 +2,12 @@
 
 All notable changes to **TEDI Secondary Folder Tree**. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [SemVer](https://semver.org/).
 
+## [0.1.12] - 2026-07-18
+
+### Changed
+
+- **Documentation.** Project links point at the TEDI website (https://tedi.ilhamriski.com/) in both `manifest.json` and the README, the README follows the structure shared across the TEDI extensions (with the `npm run build` step included in the dev instructions), "How it works" is rendered as a Mermaid diagram, and the changelog dates are normalized to ISO 8601. No behaviour change.
+
 ## [0.1.11] - 2026-06-16
 
 ### Changed
